@@ -1,0 +1,18 @@
+#spring:
+#  cloud:
+#    gateway:
+#      routes:
+#        - id: hello-world
+#          uri: http://localhost:8080
+#          predicates:
+#            - Path=/auth/cadastrar
+#          filters:
+#            - ModifyRequestBody:
+#                dataType: String
+#                mimeType: text/plain
+#                inClass: String
+#                outClass: String
+#                request-parameters:
+#                  parametro1: "#{request.queryParams['parametro1']}"
+#                  parametro2: "#{request.queryParams['parametro2']}"
+
