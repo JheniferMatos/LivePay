@@ -2,6 +2,8 @@ package com.br.livepaypag.service;
 
 import com.br.livepaypag.dto.LerPagamentoDTO;
 import com.br.livepaypag.dto.PagamentoDTO;
+import com.br.livepaypag.exceptions.RequiredObjectIsNullException;
+import com.br.livepaypag.exceptions.ResourceNotFoundException;
 import com.br.livepaypag.model.Pagamento;
 import com.br.livepaypag.model.Status;
 import com.br.livepaypag.producers.PagamentoProducer;
@@ -39,7 +41,7 @@ public class PagamentoService {
 
     public LerPagamentoDTO obterPorId(Long id){
         Pagamento pagamento = pagamentoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(ResourceNotFoundException::new);
 
         return modelMapper.map(pagamento, LerPagamentoDTO.class);
     }
@@ -49,7 +51,7 @@ public class PagamentoService {
         Pagamento pagamento = modelMapper.map(pagamentoDTO, Pagamento.class);
         pagamento.setStatus(Status.CRIADO);
         pagamento.setCartao(cartaoRepository.findById(pagamentoDTO.getCartao_id())
-                .orElseThrow(RuntimeException::new));
+                .orElseThrow(RequiredObjectIsNullException::new));
 
         pagamento = pagamentoRepository.save(pagamento);
         pagamentoProducer.publishMessageEmail(pagamento);
@@ -59,14 +61,14 @@ public class PagamentoService {
 
     public void confirmarPagamento(Long id) {
         Pagamento pagamento = pagamentoRepository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(ResourceNotFoundException::new);
         pagamento.setStatus(Status.CONFIRMADO);
 
     }
 
     public void excluirPagamento(Long id) {
         Pagamento pagamento = pagamentoRepository.findById(id)
-                        .orElseThrow(RuntimeException::new);
+                        .orElseThrow(ResourceNotFoundException::new);
         pagamento.setStatus(Status.CANCELADO);
 
     }

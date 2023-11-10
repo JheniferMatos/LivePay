@@ -3,6 +3,7 @@ package com.br.livepaypag.service;
 import com.br.livepaypag.dto.CartaoDto;
 import com.br.livepaypag.dto.LerPagamentoDTO;
 import com.br.livepaypag.dto.PagamentoDTO;
+import com.br.livepaypag.exceptions.ResourceNotFoundException;
 import com.br.livepaypag.model.Cartao;
 import com.br.livepaypag.model.Pagamento;
 import com.br.livepaypag.model.Status;
@@ -32,7 +33,7 @@ public class CartaoService {
 
     public CartaoDto obterPorId(Long id){
         Cartao cartao = cartaoRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException());
+                .orElseThrow(ResourceNotFoundException::new);
 
         return modelMapper.map(cartao, CartaoDto.class);
     }
