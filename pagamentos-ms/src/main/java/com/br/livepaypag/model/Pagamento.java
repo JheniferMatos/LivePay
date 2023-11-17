@@ -22,9 +22,8 @@ public class Pagamento {
     private Long id;
 
     @NotNull
-    @Positive
-    @Column
-    private BigDecimal valor;
+    @OneToOne
+    private InformacaoPedido valor;
 
     @NotBlank
     @Size(max = 100)

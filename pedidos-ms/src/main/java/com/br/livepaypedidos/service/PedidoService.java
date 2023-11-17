@@ -6,6 +6,7 @@ import com.br.livepaypedidos.exceptions.RequiredObjectIsNullException;
 import com.br.livepaypedidos.exceptions.ResourceNotFoundException;
 import com.br.livepaypedidos.model.Pedidos;
 import com.br.livepaypedidos.model.Produto;
+import com.br.livepaypedidos.producer.PedidoProducer;
 import com.br.livepaypedidos.repository.PedidoRepository;
 import com.br.livepaypedidos.repository.PessoaRepository;
 import com.br.livepaypedidos.repository.ProdutoRepository;
@@ -32,6 +33,9 @@ public class PedidoService {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+
+    @Autowired
+    private PedidoProducer pedidoProducer;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -66,7 +70,10 @@ public class PedidoService {
 
         pedidoCriado.setTotal(calcularValorTotal(pedidoCriado));
 
-        return modelMapper.map(pedidoRepository.save(pedidoCriado), LerPedidoDTO.class);
+        pedidoCriado = pedidoRepository.save(pedidoCriado);
+        pedidoProducer.publishMessagePagamento(pedidoCriado);
+
+        return modelMapper.map(pedidoCriado, LerPedidoDTO.class);
 
     }
 

@@ -1,6 +1,7 @@
 package com.br.livepaypag.dto;
 
 import com.br.livepaypag.model.Cartao;
+import com.br.livepaypag.model.InformacaoPedido;
 import com.br.livepaypag.model.Status;
 import com.br.livepaypag.model.TipoDePagamento;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class LerPagamentoDTO {
 
     private Long id;
 
-    private BigDecimal valor;
+    private InformacaoPedido valor;
 
     private String nome;
 

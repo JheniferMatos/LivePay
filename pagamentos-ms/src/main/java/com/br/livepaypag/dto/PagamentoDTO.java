@@ -3,6 +3,7 @@ package com.br.livepaypag.dto;
 import com.br.livepaypag.model.Cartao;
 import com.br.livepaypag.model.Status;
 import com.br.livepaypag.model.TipoDePagamento;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -23,7 +24,9 @@ import java.math.BigDecimal;
 public class PagamentoDTO {
         private Long id;
 
-        private BigDecimal valor;
+        private Double valor;
+
+        private Long valor_id;
 
         private String nome;
 
