@@ -31,6 +31,11 @@ public class Usuario implements UserDetails {
         this.senha = senha;
     }
 
+    public Usuario(Usuario usuario) {
+        this.login = usuario.getLogin();
+        this.senha = usuario.getSenha();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("ROLE_USER"));

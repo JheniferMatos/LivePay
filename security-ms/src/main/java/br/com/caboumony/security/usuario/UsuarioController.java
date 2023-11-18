@@ -1,6 +1,7 @@
 package br.com.caboumony.security.usuario;
 
 import br.com.caboumony.security.security.TokenService;
+import br.com.caboumony.security.service.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -23,6 +24,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private JwtService jwtService;
 
     @Autowired
     Environment environment;
@@ -53,4 +57,11 @@ public class UsuarioController {
 
         return ResponseEntity.ok(tokenService.gerarToken((Usuario)authentication.getPrincipal()));
     }
+
+    @GetMapping("/validar")
+    public Boolean validarToken(@RequestParam String token){
+        return jwtService.validarToken(token);
+    }
+
+
 }
