@@ -1,9 +1,16 @@
 package br.com.caboumony.security.usuario;
 
 import br.com.caboumony.security.security.TokenService;
+import br.com.caboumony.security.service.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Usuario", description = "Endpoints para login e cadastro de usuarios do Microsservice de Segurança")
 public class UsuarioController {
     @Autowired
     private AuthenticationManager manager;
@@ -25,6 +33,9 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
+    private JwtService jwtService;
+
+    @Autowired
     Environment environment;
 
     @GetMapping
@@ -32,7 +43,22 @@ public class UsuarioController {
         return "teste";
     }
 
-    @PostMapping("/cadastrar")
+
+    @PostMapping(value = "/cadastrar",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Adicionar um novo Usuario",
+            description = "Adiciona um novo Usuario passando uma representação JSON do Usuario!",
+            tags = {"Usuario"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = UsuarioDto.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
     @Transactional
     public ResponseEntity cadastrarUsuario(@RequestBody @Valid UsuarioDto usuarioDto){
         if(this.usuarioRepository.findByLogin(usuarioDto.login()) != null) return ResponseEntity.badRequest().build();
@@ -44,7 +70,21 @@ public class UsuarioController {
         return ResponseEntity.ok().body("Usuário criado com sucesso");
     }
 
-    @PostMapping("/login")
+    @PostMapping(value = "/login",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Login de um Usuario",
+            description = "Loga um Usuario passando uma representação JSON do Usuario!",
+            tags = {"Usuario"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = UsuarioDto.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
     @Transactional
     public ResponseEntity efetuarLogin(@RequestBody @Valid UsuarioDto usuarioDto){
         System.out.println(environment.getProperty("local.server.port"));
@@ -53,4 +93,11 @@ public class UsuarioController {
 
         return ResponseEntity.ok(tokenService.gerarToken((Usuario)authentication.getPrincipal()));
     }
+
+    @GetMapping("/validar")
+    public Boolean validarToken(@RequestParam String token){
+        return jwtService.validarToken(token);
+    }
+
+
 }

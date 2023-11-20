@@ -1,16 +1,30 @@
-#spring:
-#  application:
-#    name: api-gateway
-#  cloud:
-#    gateway:
-#      discovery:
-#        locator:
-#          enabled: true
-#          lower-case-service-id: true
-#      routes:
-#        - id: ms-security
-#          uri: lb://ms-security
-#          predicates:
-#            - Path=/auth/**
-#server:
-#  port: 8765
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enable: true
+          lower-case-service-id: true
+      routes:
+        - id: ms-security
+          uri: lb://ms-security
+          predicates:
+            - Path=/auth/**
+          filters:
+            - AuthenticationFilter
+
+        - id: livepay-pagamentos
+          uri: lb://livepay-pagamentos
+          predicates:
+            - Path=/pagamentos/**
+          filters:
+            - AuthenticationFilter
+
+        - id: livepay-pedidos
+          uri: lb://livepay-pedidos
+          predicates:
+            - Path=/pedido/**
+            - Path=/pessoa/**
+            - Path=/produto/**
+          filters:
+            - AuthenticationFilter
