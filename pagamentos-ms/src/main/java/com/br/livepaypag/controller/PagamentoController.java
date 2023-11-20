@@ -5,12 +5,19 @@ import com.br.livepaypag.dto.LerPagamentoDTO;
 import com.br.livepaypag.dto.PagamentoDTO;
 import com.br.livepaypag.service.CartaoService;
 import com.br.livepaypag.service.PagamentoService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,6 +26,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/pagamentos")
+@Tag(name = "Pagamento", description = "Endpoints para Gerenciamento de Pagamentos do Microsservice de Pagamentos")
 public class PagamentoController {
 
     @Autowired
@@ -27,12 +35,42 @@ public class PagamentoController {
     @Autowired
     private CartaoService cartaoService;
 
-    @GetMapping
+    @GetMapping(
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @Operation(summary = "Encontrar todos os Pagamentos", description = "Encontrar todos os Pagamentos",
+            tags = {"Pagamento"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = {
+                                    @Content(
+                                            mediaType = "application/json",
+                                            array = @ArraySchema(schema = @Schema(implementation = LerPagamentoDTO.class))
+                                    )
+                            }),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            })
     public Page<LerPagamentoDTO> listar(@PageableDefault(size = 10) Pageable paginacao) {
         return pagamentoService.obterTodos(paginacao);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping(value = "/{id}",
+            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @Operation(summary = "Encontrar um Pagamento", description = "Encontrar um Pagamento",
+            tags = {"Pagamento"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = LerPagamentoDTO.class))
+                    ),
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
     public ResponseEntity<LerPagamentoDTO> detalhar(@PathVariable @NotNull Long id) {
         LerPagamentoDTO dto = pagamentoService.obterPorId(id);
 
@@ -40,14 +78,37 @@ public class PagamentoController {
     }
 
 
-    @PostMapping
+    @PostMapping(
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Adicionar um novo Pagamento",
+            description = "Adiciona um novo Pagamento passando uma representação JSON do Pagamento!",
+            tags = {"Pagamento"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = PagamentoDTO.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
     public ResponseEntity<LerPagamentoDTO> cadastrar(@RequestBody @Valid PagamentoDTO dto) {
         LerPagamentoDTO pagamento = pagamentoService.criarPagamento(dto);
 
         return ResponseEntity.ok(pagamento);
     }
 
-    @PostMapping("/{id}")
+    @PostMapping(value = "/{id}")
+    @Operation(summary = "Confirma um Pagamento",
+            description = "Confirma um Pagamento passando um Id de Pagamento",
+            tags = {"Pagamento"},
+            responses = {
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
     public ResponseEntity<PagamentoDTO> confirmarPagamento(@PathVariable @NotNull Long id) {
         pagamentoService.confirmarPagamento(id);
         return ResponseEntity.noContent().build();
@@ -55,13 +116,38 @@ public class PagamentoController {
 
 
 
-    @PostMapping("/cartao")
+    @PostMapping(value = "/cartao",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Adicionar um novo Cartao",
+            description = "Adiciona um novo Cartao passando uma representação JSON do Cartao!",
+            tags = {"Pagamento"},
+            responses = {
+                    @ApiResponse(description = "Success", responseCode = "200",
+                            content = @Content(schema = @Schema(implementation = CartaoDto.class))
+                    ),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
     public ResponseEntity<CartaoDto> criarCartao(@RequestBody CartaoDto dto) {
         CartaoDto cartaoDto = cartaoService.criarPagamento(dto);
         return ResponseEntity.ok(cartaoDto);
     }
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Deletar um Pagamento",
+            description = "Deleta um Pagamento passando um Id que representa um Pagamento!",
+            tags = {"Pagamento"},
+            responses = {
+                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+            }
+    )
     public ResponseEntity<PagamentoDTO> remover(@PathVariable @NotNull Long id) {
         pagamentoService.excluirPagamento(id);
         return ResponseEntity.noContent().build();
