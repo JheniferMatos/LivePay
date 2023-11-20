@@ -11,10 +11,13 @@
 <p align="center"><br>
     <img src="http://img.shields.io/static/v1?label=STATUS&message=CONCLUIDO&color=GREEN&style=for-the-badge">
 </p>
-<p>Este repositório contém o código-fonte e a implementação de um sistema de backend em Java para um ecommerce voltado para livestreams. O objetivo deste projeto é fornecer uma plataforma para gerenciar a compra e venda em uma plataforma de ecommerce.</p>
+<p>Este repositório contém o código-fonte e a implementação de um sistema de backend em Java para um ecommerce voltado para livestreams.</p>
 
 Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.com/b/qjC12Ih4/squad-4)
 
+## Obejtivo
+
+<p> O objetivo deste projeto é fornecer uma plataforma rápida e escalavel para gerenciar a compra e venda em uma plataforma de ecommerce.</p>
 
 ## Funcionalidades Principais
 
