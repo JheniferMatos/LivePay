@@ -25,7 +25,7 @@ public class SecurityConfigurations {
 //        return new UsuarioCustomizado();
 //    }
 
-    private final String[] LISTA_BRANCA = {"/auth/login","/auth/cadastrar","/auth/validar"};
+    private final String[] LISTA_BRANCA = {"/auth/login","/auth/cadastrar","/auth/validar", "/swagger-ui/index.html#"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -33,7 +33,7 @@ public class SecurityConfigurations {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(LISTA_BRANCA).permitAll()
+                        //.requestMatchers(LISTA_BRANCA).permitAll()
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

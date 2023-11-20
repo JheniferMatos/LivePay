@@ -13,7 +13,10 @@ public class RouterValidator {
     public static final List<String> openEndpoints = List.of(
             "/auth/cadastrar",
             "/auth/login",
-            "/eureka"
+            "/auth/validar",
+            "/eureka",
+            "/auth/**",
+            "ms-security/**"
     );
 
     public Predicate<ServerHttpRequest> isSecured =
