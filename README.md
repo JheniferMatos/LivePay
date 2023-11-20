@@ -104,5 +104,5 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 
 ## Links
 
-- Repositório: [ https://github.com/ArthurLorenzzo/Desafio-LocadoraDeVeiculos-Squad2](https://github.com/JheniferMatos/LivePay)https://github.com/JheniferMatos/LivePay
+- Repositório: https://github.com/JheniferMatos/LivePay)https://github.com/JheniferMatos/LivePay
 
