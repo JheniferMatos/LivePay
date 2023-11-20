@@ -24,7 +24,7 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 
 - **Gestão de Pagamentos:** Registro e manutenção de dados dos pagamentos da plataforma.
 
-- **Reservas e Aluguéis:** Os clientes podem realizar reservas para aluguel de veículos, especificando datas de início e término.
+- **Envio de Email:** Os clientes são notificados ao realizar pagamentos na plataforma.
 
 ## Tecnologias Utilizadas
 
@@ -38,29 +38,29 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 
 - **Banco de Dados MySql:** - Utilizado para armazenar informações sobre veículos, clientes, reservas e aluguéis.
 
-- **Lombok** v1.18.28 - Ferramenta utilizada para amentar a produtividade na criação de componentes internos.
+- **Lombok** v1.18.28 - Ferramenta utilizada para amentar a produtividade.
 
 - **IntelliJ IDEA** - IDE utilizada pela equipe para densenvolvimento do projeto.
 
-- **RabbitMQ**
+- **RabbitMQ** - Mensageria assincrona utilizada no projeto
   
-- **Arquitetura de Microsservices** 
+- **Arquitetura de Microsservices** - Arquitetura do projeto escolhida
 
-- **Junit5**
+- **Junit5** - Testes unitarios
 
-- **Locust**
+- **Locust** - Testes de carga
 
-- **Spring Cloud**
+- **Spring Cloud** - Utilizado para configurar o gateway e rotas
 
-- **Spring Security e JWT**
+- **Spring Security e JWT** - Segurança feita com geração de tokens JWT
 
-- **Swgager e Javadoc**
+- **Swgager e Javadoc** - Documentação feita com essas bibliotecas
 
 
 
 ## Estrategias de Desenvolvimento 
 
-- **Arquitetura de microsservices** -
+- **Arquitetura de microsservices** - Arquitetura escolhida pela escalabilidade, resiliencia e facilidade de manutenção
 
 <img width="455" alt="Captura de Tela 2023-11-20 às 14 17 21" src="https://github.com/JheniferMatos/LivePay/assets/95923686/8104c69a-9afb-4533-ba1d-09132e713f85">
 <br>
@@ -104,5 +104,5 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 
 ## Links
 
-- Repositório: https://github.com/JheniferMatos/LivePay)https://github.com/JheniferMatos/LivePay
+- Repositório: https://github.com/JheniferMatos/LivePay
 
