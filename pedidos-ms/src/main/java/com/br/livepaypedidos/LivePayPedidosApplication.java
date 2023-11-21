@@ -4,9 +4,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
+/**
+ * Classe principal que inicia a aplicação Spring Boot.
+ */
 @SpringBootApplication
 public class LivePayPedidosApplication {
 
+    /**
+     * Método principal que inicia a aplicação Spring Boot.
+     *
+     * @param args Os argumentos da linha de comando.
+     */
     public static void main(String[] args) {
         SpringApplication.run(LivePayPedidosApplication.class, args);
     }

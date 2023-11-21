@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entidade que representa um e-mail no sistema.
+ */
 @Entity
 @Table(name = "emails")
 @Data
@@ -38,6 +41,5 @@ public class Email {
 
     @Column
     private StatusEmail statusEmail;
-
 
 }

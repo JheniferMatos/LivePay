@@ -1,10 +1,7 @@
 package com.br.livepaypedidos.controller;
 
 import com.br.livepaypedidos.dto.PessoaDTO;
-import com.br.livepaypedidos.dto.ProdutoDTO;
-import com.br.livepaypedidos.model.Pessoa;
 import com.br.livepaypedidos.service.PessoaService;
-import com.br.livepaypedidos.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,6 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável por gerenciar os endpoints relacionados às Pessoas do Microsserviço.
+ */
 @RestController
 @RequestMapping("/pessoa")
 @Tag(name = "Pessoa", description = "Endpoints para Gerenciamento de Pessoas do Microsservice de Pedidos")
@@ -29,8 +29,14 @@ public class PessoaController {
     @Autowired
     private PessoaService pessoaService;
 
+    /**
+     * Recupera uma página de Pessoas.
+     *
+     * @param paginacao O objeto Pageable que define as opções de paginação.
+     * @return Uma página de {@link PessoaDTO}.
+     */
     @GetMapping(
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Encontrar todas as Pessoas", description = "Encontrar todas as pessoas",
             tags = {"Pessoa"},
             responses = {
@@ -50,9 +56,15 @@ public class PessoaController {
         return pessoaService.obterTodos(paginacao);
     }
 
+    /**
+     * Recupera uma Pessoa com base no ID fornecido.
+     *
+     * @param id O ID da Pessoa a ser recuperada.
+     * @return Um {@link ResponseEntity} contendo o {@link PessoaDTO} correspondente.
+     */
     @GetMapping(value = "/{id}",
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    @Operation(summary = "Encontrar uma Pessoa", description = "Encontrar um pessoa",
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+    @Operation(summary = "Encontrar uma Pessoa", description = "Encontrar uma pessoa",
             tags = {"Pessoa"},
             responses = {
                     @ApiResponse(description = "Success", responseCode = "200",
@@ -67,11 +79,15 @@ public class PessoaController {
     )
     public ResponseEntity<PessoaDTO> detalhar(@PathVariable @NotNull Long id) {
         PessoaDTO dto = pessoaService.obterPorId(id);
-
         return ResponseEntity.ok(dto);
     }
 
-
+    /**
+     * Cria uma nova Pessoa com base nos dados fornecidos no corpo da requisição.
+     *
+     * @param dto O objeto {@link PessoaDTO} que representa os dados da nova Pessoa.
+     * @return Um {@link ResponseEntity} contendo o {@link PessoaDTO} da Pessoa recém-criada.
+     */
     @PostMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -89,13 +105,19 @@ public class PessoaController {
     )
     public ResponseEntity<PessoaDTO> cadastrar(@RequestBody @Valid PessoaDTO dto) {
         PessoaDTO pessoa = pessoaService.criarPessoa(dto);
-
         return ResponseEntity.ok(pessoa);
     }
 
+    /**
+     * Atualiza uma Pessoa existente com base no ID fornecido e nos dados no corpo da requisição.
+     *
+     * @param id O ID da Pessoa a ser atualizada.
+     * @param dto O objeto {@link PessoaDTO} que representa os novos dados da Pessoa.
+     * @return Um {@link ResponseEntity} contendo o {@link PessoaDTO} atualizado.
+     */
     @PutMapping(
-            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Atualizar uma Pessoa",
             description = "Atualiza uma Pessoa passando uma representação JSON ou XML de Pessoa!",
             tags = {"Pessoa"},
@@ -114,6 +136,12 @@ public class PessoaController {
         return ResponseEntity.ok(atualizado);
     }
 
+    /**
+     * Remove uma Pessoa com base no ID fornecido.
+     *
+     * @param id O ID da Pessoa a ser removida.
+     * @return Um {@link ResponseEntity} indicando o sucesso da remoção.
+     */
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar uma Pessoa",
             description = "Deleta uma Pessoa passando um Id que representa uma Pessoa!",
@@ -130,5 +158,4 @@ public class PessoaController {
         pessoaService.excluirPessoa(id);
         return ResponseEntity.noContent().build();
     }
-
 }

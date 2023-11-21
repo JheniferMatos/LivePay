@@ -1,7 +1,5 @@
 package com.br.livepaypedidos.controller;
 
-import com.br.livepaypedidos.dto.CriarPedidoDTO;
-import com.br.livepaypedidos.dto.LerPedidoDTO;
 import com.br.livepaypedidos.dto.ProdutoDTO;
 import com.br.livepaypedidos.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -20,6 +18,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável por gerenciar os endpoints relacionados aos Produtos do Microsserviço.
+ */
 @RestController
 @RequestMapping("/produto")
 @Tag(name = "Produto", description = "Endpoints para Gerenciamento de Produtos do Microsservice de Pedidos")
@@ -28,8 +29,14 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    /**
+     * Recupera uma página de Produtos.
+     *
+     * @param paginacao O objeto Pageable que define as opções de paginação.
+     * @return Uma página de {@link ProdutoDTO}.
+     */
     @GetMapping(
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Encontrar todos os Produtos", description = "Encontrar todos os Produtos",
             tags = {"Produto"},
             responses = {
@@ -49,8 +56,14 @@ public class ProdutoController {
         return produtoService.obterTodos(paginacao);
     }
 
+    /**
+     * Recupera um Produto com base no ID fornecido.
+     *
+     * @param id O ID do Produto a ser recuperado.
+     * @return Um {@link ResponseEntity} contendo o {@link ProdutoDTO} correspondente.
+     */
     @GetMapping(value = "/{id}",
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Encontrar um Produto", description = "Encontrar um Produto",
             tags = {"Produto"},
             responses = {
@@ -66,11 +79,15 @@ public class ProdutoController {
     )
     public ResponseEntity<ProdutoDTO> detalhar(@PathVariable @NotNull Long id) {
         ProdutoDTO dto = produtoService.obterPorId(id);
-
         return ResponseEntity.ok(dto);
     }
 
-
+    /**
+     * Cria um novo Produto com base nos dados fornecidos no corpo da requisição.
+     *
+     * @param dto O objeto {@link ProdutoDTO} que representa os dados do novo Produto.
+     * @return Um {@link ResponseEntity} contendo o {@link ProdutoDTO} do Produto recém-criado.
+     */
     @PostMapping(
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
             produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
@@ -87,14 +104,20 @@ public class ProdutoController {
             }
     )
     public ResponseEntity<ProdutoDTO> cadastrar(@RequestBody @Valid ProdutoDTO dto) {
-        ProdutoDTO pagamento = produtoService.criarProduto(dto);
-
-        return ResponseEntity.ok(pagamento);
+        ProdutoDTO produto = produtoService.criarProduto(dto);
+        return ResponseEntity.ok(produto);
     }
 
+    /**
+     * Atualiza um Produto existente com base no ID fornecido e nos dados no corpo da requisição.
+     *
+     * @param id O ID do Produto a ser atualizado.
+     * @param dto O objeto {@link ProdutoDTO} que representa os novos dados do Produto.
+     * @return Um {@link ResponseEntity} contendo o {@link ProdutoDTO} atualizado.
+     */
     @PutMapping(
-            consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE },
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
     @Operation(summary = "Atualizar um Produto",
             description = "Atualiza um Produto passando uma representação JSON ou XML do produto!",
             tags = {"Produto"},
@@ -113,6 +136,12 @@ public class ProdutoController {
         return ResponseEntity.ok(atualizado);
     }
 
+    /**
+     * Remove um Produto com base no ID fornecido.
+     *
+     * @param id O ID do Produto a ser removido.
+     * @return Um {@link ResponseEntity} indicando o sucesso da remoção.
+     */
     @DeleteMapping("/{id}")
     @Operation(summary = "Deletar um Produto",
             description = "Deleta um Produto passando um Id que representa um Produto!",
@@ -129,5 +158,4 @@ public class ProdutoController {
         produtoService.excluirProduto(id);
         return ResponseEntity.noContent().build();
     }
-
 }

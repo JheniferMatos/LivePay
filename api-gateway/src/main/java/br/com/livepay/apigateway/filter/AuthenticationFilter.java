@@ -1,6 +1,5 @@
 package br.com.livepay.apigateway.filter;
 
-
 import br.com.livepay.apigateway.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -8,6 +7,9 @@ import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFac
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
+/**
+ * Filtro de autenticação para verificar a presença e validade do token JWT.
+ */
 @Component
 public class AuthenticationFilter extends AbstractGatewayFilterFactory<AuthenticationFilter.Config> {
 
@@ -17,10 +19,16 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     @Autowired
     private JwtUtil jwtUtil;
 
-    public AuthenticationFilter () {
+    public AuthenticationFilter() {
         super(Config.class);
     }
 
+    /**
+     * Aplica o filtro de autenticação.
+     *
+     * @param config Configurações do filtro.
+     * @return Instância de GatewayFilter.
+     */
     @Override
     public GatewayFilter apply(Config config) {
         return ((exchange, chain) -> {
@@ -43,6 +51,9 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
         });
     }
 
+    /**
+     * Configurações do filtro.
+     */
     public static class Config {
 
     }

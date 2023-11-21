@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Entidade que representa um cartão de pagamento.
+ */
 @Entity
 @Table(name = "cartoes")
 @Getter
@@ -16,7 +19,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cartao {
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,12 +35,12 @@ public class Cartao {
     private String numero;
 
     @NotBlank
-    @Size(max=7)
+    @Size(max = 7)
     @Column
     private String dataExpiracao;
 
     @NotBlank
-    @Size(min=3, max=3)
+    @Size(min = 3, max = 3)
     @Column
     private String codigoSeguranca;
 

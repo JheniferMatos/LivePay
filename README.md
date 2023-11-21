@@ -68,7 +68,7 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 <img width="455" alt="Captura de Tela 2023-11-20 às 14 17 21" src="https://github.com/JheniferMatos/LivePay/assets/95923686/8104c69a-9afb-4533-ba1d-09132e713f85">
 <br>
 
-- **Spring Security** - Foi utilizado o spring security juntamente com o JWT para gerar tokens de acesso, foi escolhido pela facilidade de integração, segurança e desempenho
+- **Spring Security** - Foi utilizado o spring security juntamente com a geração de tokens JWT para gerar liberar o acesso, foi escolhido pela facilidade de integração, segurança e desempenho
 
 <img width="850" alt="Captura de Tela 2023-11-20 às 14 20 42" src="https://github.com/JheniferMatos/LivePay/assets/95923686/bc60c641-9f6d-4971-8051-ae678c9db060">
 <br>
@@ -83,7 +83,7 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 - **Testes Unitarios e de Carga** - Estratégia utilizada para testar o funcionamento esperado dos componentes e a resistencia do sistema
 
 
-<img width="1465" alt="Captura de Tela 2023-11-09 às 23 31 11" src="https://github.com/JheniferMatos/LivePay/assets/95923686/55afc2d5-bc44-4372-a4d7-abfa35f03b9b">
+<img width="1016" alt="Captura de Tela 2023-11-09 às 23 31 48" src="https://github.com/JheniferMatos/LivePay/assets/95923686/756f4d40-c71b-4b81-acf7-a55ffdd387e0">
 <br><br>
 <img width="911" alt="Captura de Tela 2023-11-20 às 15 37 29" src="https://github.com/JheniferMatos/LivePay/assets/95923686/c8af39bd-4830-4c47-ad64-6aac426c5b3c">
 <br>
