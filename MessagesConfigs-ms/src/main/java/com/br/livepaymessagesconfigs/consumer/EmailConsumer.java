@@ -21,6 +21,7 @@ public class EmailConsumer {
         BeanUtils.copyProperties(emailDto, emailModel);
 
         emailService.sendEmail(emailModel);
+
     }
 
 }

@@ -23,7 +23,7 @@ public class PagamentoProducer {
         emailDto.setUserId(pagamento.getId());
         emailDto.setEmail(pagamento.getEmail());
         emailDto.setAssunto("Pagamento Efetuado");
-        emailDto.setTexto("Seu pagamento foi efetuado " + pagamento.getNome() + " no valor de: " + pagamento.getValor());
+        emailDto.setTexto("Seu pagamento foi efetuado " + pagamento.getNome() + "!");
 
         rabbitTemplate.convertAndSend("", routingKey, emailDto);
     }

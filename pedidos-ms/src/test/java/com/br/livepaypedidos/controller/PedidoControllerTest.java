@@ -23,6 +23,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -72,18 +75,21 @@ public class PedidoControllerTest {
 
     @Test
     void testeDoResponseEStatusDoCadastroDePagamento() throws Exception {
-        LerPedidoDTO mockLerDto = new LerPedidoDTO();
+        List<Produto> produtos = new ArrayList<>();
+        List<Long> produtosL = new ArrayList<>();
+
+        LerPedidoDTO mockLerDto = new LerPedidoDTO(1L, 10.0, new Pessoa(), produtos);
 
         when(pedidoService.criarPedido(any())).thenReturn(mockLerDto);
 
         var response = mockMvc.perform(post("/pedido")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(criarPedidoDTOJson.write(
-                        new CriarPedidoDTO()
+                        new CriarPedidoDTO(1L, 10.0, 1L, produtosL)
                 ).getJson())).andReturn().getResponse();
 
         var jsonEsperado = lerPedidoDTOJson.write(
-                new LerPedidoDTO()).getJson();
+                new LerPedidoDTO(1L, 10.0, new Pessoa(), produtos)).getJson();
 
         Assertions.assertThat(response.getContentAsString()).isEqualTo(jsonEsperado);
         Assertions.assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
