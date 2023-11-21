@@ -55,7 +55,7 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 
 - **Spring Cloud** - Utilizado para configurar o gateway e rotas
 
-- **Spring Security Oauth 2.0** - Segurança feita com geração de tokens JWT
+- **Spring Security e JWT** - Segurança feita com geração de tokens JWT
 
 - **Swgager e Javadoc** - Documentação feita com essas bibliotecas
 
@@ -83,7 +83,7 @@ Trello: [https://trello.com/b/QvGBf6JC/desafio-locadora-solutis](https://trello.
 - **Testes Unitarios e de Carga** - Estratégia utilizada para testar o funcionamento esperado dos componentes e a resistencia do sistema
 
 
-<img width="1465" alt="Captura de Tela 2023-11-09 às 23 31 11" src="https://github.com/JheniferMatos/LivePay/assets/95923686/55afc2d5-bc44-4372-a4d7-abfa35f03b9b">
+<img width="1016" alt="Captura de Tela 2023-11-09 às 23 31 48" src="https://github.com/JheniferMatos/LivePay/assets/95923686/756f4d40-c71b-4b81-acf7-a55ffdd387e0">
 <br><br>
 <img width="911" alt="Captura de Tela 2023-11-20 às 15 37 29" src="https://github.com/JheniferMatos/LivePay/assets/95923686/c8af39bd-4830-4c47-ad64-6aac426c5b3c">
 <br>
