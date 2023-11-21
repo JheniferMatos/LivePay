@@ -7,10 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entidade que representa um pedido.
+ */
 @Entity
 @Table(name = "pedidos")
 @Getter
@@ -19,17 +21,29 @@ import java.util.List;
 @NoArgsConstructor
 public class Pedidos {
 
+    /**
+     * O ID do pedido.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * O total do pedido.
+     */
     @Column
     private Double total;
 
+    /**
+     * A pessoa associada ao pedido.
+     */
     @ManyToOne
     @JoinColumn(name = "pessoa_id")
     private Pessoa pessoa;
 
+    /**
+     * Lista de produtos associados ao pedido.
+     */
     @ManyToMany
     @JoinTable(
             name = "pedido_produto",
@@ -37,8 +51,5 @@ public class Pedidos {
             inverseJoinColumns = @JoinColumn(name = "produto_id")
     )
     @NotNull
-    private List<Produto> produto;
-
-
-
+    private List<Produto> produto = new ArrayList<>();
 }

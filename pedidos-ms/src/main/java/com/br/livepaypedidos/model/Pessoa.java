@@ -6,8 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
+/**
+ * Entidade que representa uma pessoa.
+ */
 @Entity
 @Table(name = "pessoas")
 @Getter
@@ -16,17 +17,28 @@ import java.util.List;
 @NoArgsConstructor
 public class Pessoa {
 
+    /**
+     * O ID da pessoa.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * O nome da pessoa.
+     */
     @Column
     private String nome;
 
+    /**
+     * O email da pessoa.
+     */
     @Column
     private String email;
 
+    /**
+     * O CPF da pessoa.
+     */
     @Column
     private String cpf;
-
 }

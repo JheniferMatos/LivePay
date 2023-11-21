@@ -21,6 +21,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controller responsável por gerenciar os endpoints relacionados aos Pedidos do Microsserviço.
+ */
 @RestController
 @RequestMapping("/pedido")
 @Tag(name = "Pedido", description = "Endpoints para Gerenciamento de Pedidos do Microsservice de Pedidos")
@@ -29,64 +32,63 @@ public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
-    @GetMapping(
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    @Operation(summary = "Encontrar todos os Pedidos", description = "Encontrar todos os Pedidos",
-            tags = {"Pedido"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = {
-                                    @Content(
-                                            mediaType = "application/json",
-                                            array = @ArraySchema(schema = @Schema(implementation = LerPedidoDTO.class))
-                                    )
-                            }),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-            })
+    /**
+     * Recupera uma página de Pedidos.
+     *
+     * @param paginacao O objeto Pageable que define as opções de paginação.
+     * @return Uma página de {@link LerPedidoDTO}.
+     */
+    @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @Operation(summary = "Encontrar todos os Pedidos", description = "Encontrar todos os Pedidos", tags = {
+            "Pedido" }, responses = {
+            @ApiResponse(description = "Success", responseCode = "200", content = {
+                    @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = LerPedidoDTO.class)))
+            }),
+            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+            @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+    })
     public Page<LerPedidoDTO> listar(@PageableDefault(size = 10) Pageable paginacao) {
         return pedidoService.obterTodos(paginacao);
     }
 
-    @GetMapping(value = "/{id}",
-            produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-    @Operation(summary = "Encontrar um Pedido", description = "Encontrar um Pedido",
-            tags = {"Pedido"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = LerPedidoDTO.class))
-                    ),
-                    @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
-                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-            }
-    )
+    /**
+     * Recupera um Pedido com base no ID fornecido.
+     *
+     * @param id O ID do Pedido a ser recuperado.
+     * @return Um {@link ResponseEntity} contendo o {@link LerPedidoDTO} correspondente.
+     */
+    @GetMapping(value = "/{id}", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @Operation(summary = "Encontrar um Pedido", description = "Encontrar um Pedido", tags = {
+            "Pedido" }, responses = {
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = LerPedidoDTO.class))),
+            @ApiResponse(description = "No Content", responseCode = "204", content = @Content),
+            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+            @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+            @ApiResponse(description = "Not Found", responseCode = "404", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+    })
     public ResponseEntity<LerPedidoDTO> detalhar(@PathVariable @NotNull Long id) {
         LerPedidoDTO dto = pedidoService.obterPorId(id);
-
         return ResponseEntity.ok(dto);
     }
 
-
-    @PostMapping(
-            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
-            produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    @Operation(summary = "Adicionar um novo Pedido",
-            description = "Adiciona um novo Pedido passando uma representação JSON do Pedido!",
-            tags = {"Pedido"},
-            responses = {
-                    @ApiResponse(description = "Success", responseCode = "200",
-                            content = @Content(schema = @Schema(implementation = CriarPedidoDTO.class))
-                    ),
-                    @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
-                    @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
-                    @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
-            }
-    )
+    /**
+     * Cria um novo Pedido com base nos dados fornecidos no corpo da requisição.
+     *
+     * @param dto O objeto {@link CriarPedidoDTO} que representa os dados do novo Pedido.
+     * @return Um {@link ResponseEntity} contendo o {@link LerPedidoDTO} do Pedido recém-criado.
+     */
+    @PostMapping(consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+    @Operation(summary = "Adicionar um novo Pedido", description = "Adiciona um novo Pedido passando uma representação JSON do Pedido!", tags = {
+            "Pedido" }, responses = {
+            @ApiResponse(description = "Success", responseCode = "200", content = @Content(schema = @Schema(implementation = CriarPedidoDTO.class))),
+            @ApiResponse(description = "Bad Request", responseCode = "400", content = @Content),
+            @ApiResponse(description = "Unauthorized", responseCode = "401", content = @Content),
+            @ApiResponse(description = "Internal Error", responseCode = "500", content = @Content)
+    })
     public ResponseEntity<LerPedidoDTO> cadastrar(@RequestBody @Valid CriarPedidoDTO dto) {
         var pedidoCriado = pedidoService.criarPedido(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoCriado);

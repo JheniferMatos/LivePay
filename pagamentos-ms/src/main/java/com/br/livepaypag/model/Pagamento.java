@@ -7,8 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
+/**
+ * Entidade que representa um pagamento.
+ */
 @Entity
 @Table(name = "pagamentos")
 @Getter
@@ -42,8 +43,4 @@ public class Pagamento {
     @Enumerated(EnumType.STRING)
     @Column
     private Status status;
-
-
-
-
 }

@@ -7,15 +7,27 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuração da aplicação.
+ */
 @Configuration
 public class ApplicationConfiguration {
 
+    /**
+     * Configuração do ModelMapper.
+     *
+     * @return Uma instância de ModelMapper configurada.
+     */
     @Bean
     public ModelMapper novoModelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
-        return modelMapper;
+        return new ModelMapper();
     }
 
+    /**
+     * Configuração personalizada para a documentação Swagger (OpenAPI).
+     *
+     * @return Uma instância de OpenAPI configurada.
+     */
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
@@ -24,10 +36,9 @@ public class ApplicationConfiguration {
                         .version("v1")
                         .description("Cabou o Money")
                         .termsOfService("https://cabouomoney.com.br")
-                        .license(
-                                new License()
-                                        .name("Apache 2.0")
-                                        .url("https://cabouomoney.com.br")));
+                        .license(new License()
+                                .name("Apache 2.0")
+                                .url("https://cabouomoney.com.br")));
     }
 
 }

@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Serviço para operações relacionadas a pedidos.
+ */
 @Service
 public class PedidoService {
 
@@ -40,12 +43,25 @@ public class PedidoService {
     @Autowired
     private ModelMapper modelMapper;
 
+    /**
+     * Obtém todos os pedidos paginados.
+     *
+     * @param pageable A configuração da página.
+     * @return Página de pedidos no formato DTO.
+     */
     public Page<LerPedidoDTO> obterTodos(Pageable pageable){
         return pedidoRepository
                 .findAll(pageable)
                 .map(p -> modelMapper.map(p, LerPedidoDTO.class));
     }
 
+    /**
+     * Obtém um pedido por ID.
+     *
+     * @param id O ID do pedido.
+     * @return DTO representando o pedido.
+     * @throws EntityNotFoundException Se o pedido não for encontrado.
+     */
     public LerPedidoDTO obterPorId(Long id){
         Pedidos pedidos = pedidoRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
@@ -53,6 +69,14 @@ public class PedidoService {
         return modelMapper.map(pedidos, LerPedidoDTO.class);
     }
 
+    /**
+     * Cria um novo pedido.
+     *
+     * @param pedidoDTO DTO contendo os detalhes do pedido.
+     * @return DTO representando o pedido criado.
+     * @throws RequiredObjectIsNullException Se o pedidoDTO for nulo.
+     * @throws ResourceNotFoundException Se o recurso não for encontrado (pessoa ou produto).
+     */
     public LerPedidoDTO criarPedido(CriarPedidoDTO pedidoDTO){
 
         if (pedidoDTO == null){throw new RequiredObjectIsNullException();}
@@ -77,6 +101,12 @@ public class PedidoService {
 
     }
 
+    /**
+     * Calcula o valor total de um pedido com base nos produtos.
+     *
+     * @param pedido O pedido para o qual calcular o valor total.
+     * @return O valor total do pedido.
+     */
     public double calcularValorTotal(Pedidos pedido) {
         double valorTotal = 0.0;
 
@@ -88,28 +118,4 @@ public class PedidoService {
 
         return valorTotal;
     }
-
-
-//    public Produto comprarProduto(LerPedidoDTO dto) {
-//        if (dto == null){throw new RequiredObjectIsNullException();}
-//
-//        List<Produto> produtos = dto.getProduto();
-//        List<Produto> temp = new ArrayList<>();
-//
-//        for (Produto produto : produtos){
-//           if (produto.getEstoque().getQuantidadeProduto() > produto.getQuantidade()){
-//               produto.getEstoque().calcularDecrecimo(produto);
-//               //produto.getEstoque().setQuantidadeProduto(produto.calcularDecrecimo(produto));
-//               //produto.getEstoque().setQuantidadeProduto(produto.getEstoque().getQuantidadeProduto() - produto.getQuantidade());
-//               temp.add(produto);
-//           }
-//        }
-//
-//
-//        List<Produto> pedidoAtualizado = produtoRepository.saveAll(temp);
-//
-//        return modelMapper.map(pedidoAtualizado, Produto.class);
-//    }
-
-
 }

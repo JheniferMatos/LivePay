@@ -4,7 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
-
+/**
+ * Classe principal que inicia a aplicação Spring Boot para o Microsserviço de Pagamentos.
+ */
 @EnableDiscoveryClient
 @SpringBootApplication
 public class LivePayPagApplication {

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Entidade que representa informações de um pedido.
+ */
 @Entity
 @Table(name = "InformacoesPedido")
 @Getter

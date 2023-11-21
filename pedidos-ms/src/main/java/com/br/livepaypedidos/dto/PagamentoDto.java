@@ -3,14 +3,21 @@ package com.br.livepaypedidos.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
+/**
+ * DTO utilizado para representar informações de pagamento.
+ */
 @Getter
 @Setter
 public class PagamentoDto {
 
+    /**
+     * O ID do pagamento.
+     */
     private Long id;
 
+    /**
+     * O valor do pagamento.
+     */
     private Double valor;
 
 }

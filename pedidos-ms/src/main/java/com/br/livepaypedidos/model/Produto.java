@@ -8,8 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
+/**
+ * Entidade que representa um produto.
+ */
 @Entity
 @Table(name = "produtos")
 @Getter
@@ -18,23 +19,39 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Produto {
 
+    /**
+     * O ID do produto.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * O nome do produto.
+     */
     @Column
     @NotBlank
     private String nome;
 
+    /**
+     * O valor do produto.
+     */
     @Column
     @NotNull
     private Double valor;
 
-//    @Column
-//    @NotNull
-//    private Integer quantidade;
-//
-//    @Column
-//    private Integer quantidadeNoCarrinho;
+    
 
+    //    /**
+    //     * A quantidade do produto.
+    //     */
+    //    @Column
+    //    @NotNull
+    //    private Integer quantidade;
+    //
+    //    /**
+    //     * A quantidade no carrinho do produto.
+    //     */
+    //    @Column
+    //    private Integer quantidadeNoCarrinho;
 }
